@@ -1,3 +1,7 @@
+if [ ! -d "$HOME/.wallpaper" ]; then
+	mkdir "$HOME/.wallpaper"
+fi
+
 rm ~/.wallpaper/*
 cp $1 ~/.wallpaper
 xwallpaper --zoom $1
