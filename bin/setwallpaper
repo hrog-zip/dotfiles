@@ -1,0 +1,3 @@
+rm ~/.wallpaper/*
+cp $1 ~/.wallpaper
+xwallpaper --zoom $1
