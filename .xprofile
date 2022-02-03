@@ -1,0 +1,10 @@
+exec dunst &
+
+setxkbmap -option grp:alt_shift_toggle -option grp_led:scroll us,ru 
+
+xwallpaper --zoom .wallpaper/*
+xset s off
+
+xrandr --output HDMI-A-0 --mode 1680x1050
+xrandr --output HDMI-A-1 --mode 1920x1080 --primary --right-of HDMI-A-0
+
