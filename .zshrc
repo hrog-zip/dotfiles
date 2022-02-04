@@ -105,7 +105,7 @@ export TERM=alacritty
 export BROWSER=firefox
 
 alias restartx='sudo systemctl restart display-manager'
-alias ls='ls -al --color=auto'
+alias ls='ls -Al --color=auto'
 alias aura='sudo aura'
 alias pacman='sudo pacman'
 alias dotfilescfg="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
