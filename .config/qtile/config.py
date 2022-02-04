@@ -152,7 +152,7 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-colors = ["#2a3241bf",
+colors = ["#2a3241e5",
           "#7a7a7a",
           "#000000",
           "#ffbd00",
