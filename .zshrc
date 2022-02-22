@@ -102,14 +102,21 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=vim
 export TERM=alacritty
-export BROWSER=firefox
+# export BROWSER=firefox
 
 alias restartx='sudo systemctl restart display-manager'
+alias s="/bin/ls"
 alias ls='ls -Al --color=auto'
 alias aura='sudo aura'
 alias pacman='sudo pacman'
 alias dotfilescfg="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+alias rr="ranger"
+alias s!="sudo !!"
+alias cfgq="vim ~/.config/qtile/config.py"
+alias cfgzsh="vim ~/.zshrc"
+alias cfgx="vim ~/.xprofile"
 
 export PATH="$HOME/bin:$PATH"
-# figlet arzt arsch | lolcat -S 32
+# figlet ARZT ARSCH | lolcat -S 60
 neofetch
+source /home/arzt/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

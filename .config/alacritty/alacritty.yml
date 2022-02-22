@@ -3,5 +3,6 @@ window:
 
 font:
   normal:
-    family: Inconsolata
+    family: JetBrains Mono
+    style: Medium
   size: 14

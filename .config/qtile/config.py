@@ -65,16 +65,21 @@ keys = [
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    
+
+    Key([mod, "mod1"], "j", lazy.layout.flip_down()),
+    Key([mod, "mod1"], "k", lazy.layout.flip_up()),
+    Key([mod, "mod1"], "h", lazy.layout.flip_left()),
+    Key([mod, "mod1"], "l", lazy.layout.flip_right()),
+    Key([mod, "control"], "j", lazy.layout.grow_down()),
+    Key([mod, "control"], "k", lazy.layout.grow_up()),
+    Key([mod, "control"], "h", lazy.layout.grow_left()),
+    Key([mod, "control"], "l", lazy.layout.grow_right()),
+    Key([mod, "shift"], "n", lazy.layout.normalize()),
+
     Key([mod, "control"], "k", lazy.layout.grow()),
     Key([mod, "control"], "j", lazy.layout.shrink()),
     Key([mod], "space", lazy.window.toggle_floating()),
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
+    
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod, "shift"], "Return", lazy.spawn(f"qtile run-cmd -f {terminal}"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
@@ -85,57 +90,80 @@ keys = [
     Key([mod], "w", lazy.to_screen(1)),
     Key([mod], "e", lazy.to_screen(0)),
 
-    Key([mod], "s", lazy.spawn(browser)),    
-    Key([mod, "shift"], "s", lazy.spawn(f"{browser} -private-window")),    
+    Key([mod, "mod1"], "w", lazy.spawn(browser)),    
+    Key([mod, "mod1"], "s", lazy.spawn(f"{browser} -private-window")),    
     Key([mod], "d", lazy.spawn("rofi -modi 'drun' -show drun")),    
 
-    Key([mod], "z", lazy.spawn("pavucontrol")),
+    Key([mod, "mod1"], "z", lazy.spawn("pavucontrol")),
     Key([], "Print", lazy.spawn("flameshot gui")),
     Key([mod], "p", lazy.spawn(f"{terminal} -e" + os.path.expanduser('~/bin/pkginstall'))), 
     Key([mod], "g", lazy.spawn("rofi -modi 'emoji' -show emoji")),
-    Key([mod], "t", lazy.spawn("io.github.kotatogram")),
+    Key([mod, "mod1"], "t", lazy.spawn("io.github.kotatogram")),
+    Key([mod, "mod1"], "c", lazy.spawn("qtile run-cmd -f galculator")),
+    Key([mod], "f", lazy.window.toggle_fullscreen()),
+    Key([mod, "mod1"], "k", lazy.spawn("keepassxc")),
+    Key([mod, "control", "shift"], "o", lazy.spawn("shutdown now")),
+    Key([mod, "control", "shift"], "p", lazy.spawn("shutdown now")),
+    Key([mod], "Home", lazy.spawn("amixer -q -D pulse set Master 2%+")),
+    Key([mod], "End", lazy.spawn("amixer -q -D pulse set Master 2%-")),
+    Key([mod, "mod1"], "space", lazy.spawn(f"{terminal} -e btop")),
+    Key([mod, "mod1"], "m", lazy.spawn(f"multimc")),
 ]
 
-groups = [Group(i) for i in "123456789"]
+# groups = [Group(i) for i in "1234567890"]
+groups = [Group("web"),
+          Group("tg", matches=[Match(wm_class=["kotatogram-desktop"])]),
+          Group("mmc", matches=[Match(wm_class=["UltimMC"])]),
+          Group("steam", matches=[Match(wm_class=["Steam"])]),
+          # This dsent really work because Minecraft window named something like "Minecraft* 1.18.1"
+          # I think its possible to get all windows that contains Minecraft in the name to match group
+          # However i dont know how
+          Group("game", matches=[Match(wm_class=["Minecraft"])]),
+          Group("zoom"),
+          Group("dis"),
+          Group("gfx"),
+          Group("code")]
 
-for i in groups:
-    keys.extend(
-        [
-            # mod1 + letter of group = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            #Key(
-            #    [mod, "shift"],
-            #    i.name,
-            #    lazy.window.togroup(i.name, switch_group=True),
-            #    desc="Switch to & move focused window to group {}".format(i.name),
-            #),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-                desc="move focused window to group {}".format(i.name))
-        ]
-    )
+from libqtile.dgroups import simple_key_binder
+dgroups_key_binder = simple_key_binder("mod4")
+
+# for i in groups:
+#     keys.extend(
+#         [
+#             # mod1 + letter of group = switch to group
+#             Key(
+#                 [mod],
+#                 groups.index(i),
+#                 lazy.group[i.name].toscreen(),
+#             ),
+#             # mod1 + shift + letter of group = switch to & move focused window to group
+#             #Key(
+#             #    [mod, "shift"],
+#             #    i.name,
+#             #    lazy.window.togroup(i.name, switch_group=True),
+#             #    desc="Switch to & move focused window to group {}".format(i.name),
+#             #),
+#             # Or, use below if you prefer not to switch to that group.
+#             # # mod1 + shift + letter of group = move focused window to group
+#             Key([mod, "shift"], groups.index(i), lazy.window.togroup(i.name),
+#                 desc="move focused window to group {}".format(i.name))
+#         ]
+#     )
 
 layout_style = {"border_focus": "#ffbd00",
-                "border_width": 1,
-                "margin": 10,}
+                "border_width": 2,
+                "margin": 3,}
 
 floating_layout_style = {"border_focus": "#ff4545",
                          "border_width": 1,}
 
 layouts = [
     #layout.Columns(**layout_style),
-    layout.MonadTall(**layout_style),
-    layout.Max(),
+    # layout.MonadTall(**layout_style),
     #layout.Floating(),
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
+    layout.Bsp(**layout_style),
+    layout.Max(),
     # layout.Matrix(),
     # layout.MonadWide(),
     # layout.RatioTile(),
@@ -222,7 +250,7 @@ mouse = [
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
-dgroups_key_binder = None
+# dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
 bring_front_click = False
