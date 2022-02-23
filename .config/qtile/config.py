@@ -113,7 +113,7 @@ keys = [
 
 # groups = [Group(i) for i in "1234567890"]
 groups = [Group("web", layout="max"),
-          Group("tg", matches=[Match(wm_class=["kotatogram-desktop", "discord"])], layout="max"),
+          Group("2mon", matches=[Match(wm_class=["kotatogram-desktop", "discord", "keepassxc"])], layout="max"),
           Group("term"),
           Group("gl", matches=[Match(wm_class=["UltimMC", "Steam"])]),
           # This dsent really work because Minecraft window named something like "Minecraft* 1.18.1"
