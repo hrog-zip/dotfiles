@@ -112,18 +112,15 @@ keys = [
 ]
 
 # groups = [Group(i) for i in "1234567890"]
-groups = [Group("web"),
-          Group("tg", matches=[Match(wm_class=["kotatogram-desktop"])]),
-          Group("mmc", matches=[Match(wm_class=["UltimMC"])]),
-          Group("steam", matches=[Match(wm_class=["Steam"])]),
+groups = [Group("web", layout="max"),
+          Group("tg", matches=[Match(wm_class=["kotatogram-desktop", "discord"])], layout="max"),
+          Group("term"),
+          Group("gl", matches=[Match(wm_class=["UltimMC", "Steam"])]),
           # This dsent really work because Minecraft window named something like "Minecraft* 1.18.1"
           # I think its possible to get all windows that contains Minecraft in the name to match group
           # However i dont know how
           Group("game", matches=[Match(wm_class=["Minecraft"])]),
-          Group("zoom"),
-          Group("dis"),
-          Group("gfx"),
-          Group("code"),
+          Group("main"),
           Group("obs", matches=[Match(wm_class=["obs"])])]
 
 from libqtile.dgroups import simple_key_binder
