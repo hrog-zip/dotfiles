@@ -107,7 +107,8 @@ keys = [
     Key([mod], "Home", lazy.spawn("amixer -q -D pulse set Master 2%+")),
     Key([mod], "End", lazy.spawn("amixer -q -D pulse set Master 2%-")),
     Key([mod, "mod1"], "space", lazy.spawn(f"{terminal} -e btop")),
-    Key([mod, "mod1"], "m", lazy.spawn(f"multimc")),
+    Key([mod, "mod1"], "m", lazy.spawn("bash /home/arzt/bin/multimc")),
+    Key([mod, "mod1"], "o", lazy.spawn("flatpak run com.obsproject.Studio")),
 ]
 
 # groups = [Group(i) for i in "1234567890"]
@@ -122,7 +123,8 @@ groups = [Group("web"),
           Group("zoom"),
           Group("dis"),
           Group("gfx"),
-          Group("code")]
+          Group("code"),
+          Group("obs", matches=[Match(wm_class=["obs"])])]
 
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
