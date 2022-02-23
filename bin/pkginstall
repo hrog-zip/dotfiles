@@ -1,4 +1,5 @@
 #!/bin/bash
+# this code was shamelessly stole from BugsWriter https://www.youtube.com/c/BugsWriter0x1337
 
 action=$(echo -e "Install Program\nRemove Program\nRemove Waste\nUpdate System" | rofi -dmenu "Software Manager: ")
 
