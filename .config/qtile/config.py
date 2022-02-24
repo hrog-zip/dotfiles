@@ -103,12 +103,13 @@ keys = [
     Key([mod], "f", lazy.window.toggle_fullscreen()),
     Key([mod, "mod1"], "k", lazy.spawn("keepassxc")),
     Key([mod, "control", "shift"], "o", lazy.spawn("shutdown now")),
-    Key([mod, "control", "shift"], "p", lazy.spawn("shutdown now")),
+    Key([mod, "control", "shift"], "p", lazy.spawn("reboot")),
     Key([mod], "Home", lazy.spawn("amixer -q -D pulse set Master 2%+")),
     Key([mod], "End", lazy.spawn("amixer -q -D pulse set Master 2%-")),
     Key([mod, "mod1"], "space", lazy.spawn(f"{terminal} -e btop")),
     Key([mod, "mod1"], "m", lazy.spawn("bash /home/arzt/bin/multimc")),
     Key([mod, "mod1"], "o", lazy.spawn("flatpak run com.obsproject.Studio")),
+    Key([mod, "mod1"], "v", lazy.spawn("virt-manager")),
 ]
 
 # groups = [Group(i) for i in "1234567890"]
