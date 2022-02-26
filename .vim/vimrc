@@ -1,0 +1,16 @@
+syntax on
+set tabstop=4
+set autoindent
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+colorscheme yowish
+set ttimeoutlen=0
+set noshowmode
+set showcmd
+set number relativenumber
+highlight LineNR ctermfg=darkgray
+set tabstop=4 shiftwidth=4 expandtab
