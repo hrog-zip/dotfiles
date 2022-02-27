@@ -121,5 +121,7 @@ alias cfgx="vim ~/.xprofile"
 export PATH="$HOME/bin:$PATH"
 # figlet ARZT ARSCH | lolcat -S 60
 function stierlitz { shuf -n 1 .stierlitz | lolcat -F 0.05; }
+pfetch
+
 stierlitz
 # neofetch
