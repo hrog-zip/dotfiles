@@ -16,6 +16,46 @@ super + ctrl + r
 
 super + ctrl + shift + r
     bspc wm -r
+
+super + alt + w
+    firefox
+
+super + alt + s
+    firefox -private-window
+
+super + alt + z
+    pavucontrol
+
+super + alt + t
+    io.github.kotatogram
+
+super + alt + c
+    galculator
+
+super + alt + k
+    keepassxc
+
+super + control + shift + o
+    shutdown now
+
+super + control + shift + p
+    reboot now
+
+super + alt + space
+    alacritty -e btop
+
+super + alt + m
+    bash /home/arzt/bin/multimc
+
+super + alt + o
+    flatpak run com.obsproject.Studio
+
+super + alt + v
+    virt-manager
+
+Print
+    flameshot gui
+
 #
 # bspwm hotkeys
 #
@@ -26,7 +66,10 @@ super + ctrl + shift + q
 
 # close and kill
 super + shift + q
-    bspc node -k
+    bspc node -c
+
+super + ctrl + q
+    bscpc node -k
 
 # alternate between the tiled and monocle layout
 super + m
@@ -89,8 +132,8 @@ super + {o,i}
     # bspc desktop -f '^{1-9}'
 
 # focus or send to the given desktop
-super + {1-9,0}
-    bspc desktop -s '^{1-9,10}' && bspc desktop -f '^{1-9,10}'
+super + {1-9}
+    bspc desktop -f '^{1-9}' 
 
 #
 # preselect
