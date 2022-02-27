@@ -80,8 +80,6 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.shrink()),
     Key([mod], "space", lazy.window.toggle_floating()),
     
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn(f"qtile run-cmd -f {terminal}"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -90,26 +88,7 @@ keys = [
     Key([mod], "w", lazy.to_screen(1)),
     Key([mod], "e", lazy.to_screen(0)),
 
-    Key([mod, "mod1"], "w", lazy.spawn(browser)),    
-    Key([mod, "mod1"], "s", lazy.spawn(f"{browser} -private-window")),    
-    Key([mod], "d", lazy.spawn("rofi -modi 'drun' -show drun")),    
-
-    Key([mod, "mod1"], "z", lazy.spawn("pavucontrol")),
-    Key([], "Print", lazy.spawn("flameshot gui")),
-    Key([mod], "p", lazy.spawn(f"{terminal} -e" + os.path.expanduser('~/bin/pkginstall'))), 
-    Key([mod], "g", lazy.spawn("rofi -modi 'emoji' -show emoji")),
-    Key([mod, "mod1"], "t", lazy.spawn("io.github.kotatogram")),
-    Key([mod, "mod1"], "c", lazy.spawn("qtile run-cmd -f galculator")),
     Key([mod], "f", lazy.window.toggle_fullscreen()),
-    Key([mod, "mod1"], "k", lazy.spawn("keepassxc")),
-    Key([mod, "control", "shift"], "o", lazy.spawn("shutdown now")),
-    Key([mod, "control", "shift"], "p", lazy.spawn("reboot")),
-    Key([mod], "Home", lazy.spawn("amixer -q -D pulse set Master 2%+")),
-    Key([mod], "End", lazy.spawn("amixer -q -D pulse set Master 2%-")),
-    Key([mod, "mod1"], "space", lazy.spawn(f"{terminal} -e btop")),
-    Key([mod, "mod1"], "m", lazy.spawn("bash /home/arzt/bin/multimc")),
-    Key([mod, "mod1"], "o", lazy.spawn("flatpak run com.obsproject.Studio")),
-    Key([mod, "mod1"], "v", lazy.spawn("virt-manager")),
 ]
 
 # groups = [Group(i) for i in "1234567890"]
