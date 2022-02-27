@@ -104,6 +104,8 @@ export EDITOR=vim
 export TERM=alacritty
 # export BROWSER=firefox
 
+source /home/arzt/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 alias restartx='sudo systemctl restart display-manager'
 alias s="/bin/ls"
 alias ls='ls -Al --color=auto'
@@ -118,5 +120,6 @@ alias cfgx="vim ~/.xprofile"
 
 export PATH="$HOME/bin:$PATH"
 # figlet ARZT ARSCH | lolcat -S 60
-neofetch
-source /home/arzt/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+function stierlitz { shuf -n 1 .stierlitz | lolcat -F 0.05; }
+stierlitz
+# neofetch
