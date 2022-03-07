@@ -11,8 +11,8 @@ super + d
     rofi -modi drun -show drun
 
 # make sxhkd reload its configuration files:
-super + ctrl + r
-    pkill -USR1 -x sxhkd
+# super + ctrl + r
+#     pkill -USR1 -x sxhkd
 
 super + ctrl + shift + r
     bspc wm -r
@@ -58,3 +58,6 @@ Print
 
 super + alt + o
 	com.obsproject.Studio
+
+super + p
+	alacritty -e ~/bin/pkginstall

@@ -36,10 +36,13 @@ alias aura='sudo aura'
 alias pacman='sudo pacman'
 alias dotfilescfg="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias rr="ranger"
-alias s!="sudo !!"
-alias cfgq="vim ~/.config/qtile/config.py"
-alias cfgzsh="vim ~/.zshrc"
-alias cfgx="vim ~/.xprofile"
+alias ss="sudo !!"
+alias n="nvim"
+alias cfgq="nvim ~/.config/qtile/config.py"
+alias cfgzsh="nvim ~/.zshrc"
+alias cfgx="nvim ~/.xprofile"
+alias cfgn="nvim ~/.config/nvim/init.vim"
+alias cfgsxhkd="nvim .config/sxhkd/sxhkdrc"
 
 export PATH="$HOME/bin:$PATH"
 
