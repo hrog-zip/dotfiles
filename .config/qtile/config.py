@@ -150,7 +150,6 @@ layouts = [
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
-
 widget_defaults = dict(
     font="sans",
     fontsize=12,
@@ -167,7 +166,8 @@ colors = ["#2a3241",
           "#f75040",
           "#5cf257",
           "#542b28",
-          "#5accf2"]
+          "#58c9f5",
+          "#a678e3"]
 
 def get_widgets():
     return [
@@ -204,8 +204,8 @@ def get_widgets():
                 widget.Spacer(),
                 
                 widget.Net(foreground=colors[10],
-                           format='↓ {down} ↑ {up}',
-                           use_bits=True),
+                           format="↓ {down} ↑ {up}",
+                           use_bits=False),
 
                 widget.Sep(margin = 5,
                            padding = 5,
@@ -224,7 +224,6 @@ def get_widgets():
                 
                 widget.TextBox(text="", foreground=colors[3], fontsize=13),
                 widget.Memory(foreground=colors[3],
-                              fontsize=12,
                               format="{MemUsed: .1f}{mm}  /  {MemTotal: .1f}{mm}",
                               measure_mem="G",
                               ),
@@ -235,7 +234,6 @@ def get_widgets():
 
                 # widget.CheckUpdates(),
                 widget.DF(foreground=colors[8],
-                          fontsize=12,
                           visible_on_warn=False,
                           update_interval=2,
                           format="  {f}{m} / {s}{m}  [{r:.0f}%]"
@@ -245,64 +243,24 @@ def get_widgets():
                            padding = 5,
                            ),
 
-                widget.Clock(format = "%Y-%m-%d (%b, %a) %H:%M:%S",
-                             foreground = colors[1],
-                             fontsize = 15),
+                widget.Clock(format = " %Y %b %a %H:%M:%S",
+                             foreground = colors[11],
+                             fontsize=14),
                 # widget.QuickExit(),
-            ]
-
-def get_2mon_widgets():
-    return [
-                widget.GroupBox(fontsize = 14,
-                                margin_y = 3,
-                                margin_x = 0,
-                                padding_y = 5,
-                                padding_x = 5,
-                                active = "#ffffff",
-                                inactive = colors[1],
-                                borderwidth=5,
-                                rounded = False, 
-                                highlight_color = colors[2], 
-                                highlight_method = "block",
-                                this_current_screen_border = colors[3],
-                                this_screen_border = colors[4],
-                                other_current_screen_border = colors[3],
-                                other_screen_border = colors[4],
-                                foreground = "#ffffff"),
-
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
-                
-                widget.CurrentLayout(#foreground = colors[7],
-                                     foreground = colors[1],
-                                     padding = 7,
-                                     fontsize = 14,
-                                     ),
-                widget.Spacer(),
-                widget.WindowName(foreground = "#ffffff",
-                                  margin=None, 
-                                  width=bar.CALCULATED),
-                widget.Spacer(),
-                widget.Systray(),
-                
-                widget.Clock(format = "%Y-%m-%d (%b, %a) %H:%M:%S",
-                             foreground = colors[1],
-                             fontsize = 15),
             ]
 
 screens = [
     Screen(top=bar.Bar(
-               get_2mon_widgets(),
-               28,
-               background=colors[0],
-               )
-),  Screen(top=bar.Bar(
-               get_widgets(),
-               28,
-               background=colors[0],
-               )
-),
+           get_widgets(),
+           24,
+           background=colors[0],
+           )),
+
+    Screen(top=bar.Bar(
+           get_widgets(),
+           24,
+           background=colors[0],
+           )),
 ]
 
 # Drag floating layouts.
