@@ -90,18 +90,17 @@ keys = [
 
     Key([mod], "f", lazy.window.toggle_fullscreen()),
 ]
-
 # groups = [Group(i) for i in "1234567890"]
-groups = [Group("web", layout="max"),
-          Group("2mon", matches=[Match(wm_class=["kotatogram-desktop", "discord", "keepassxc"])], layout="max"),
-          Group("term"),
-          Group("gl", matches=[Match(wm_class=["UltimMC", "Steam"])]),
+groups = [Group("web", layout="max", label=""),
+          Group("2mon", label="", matches=[Match(wm_class=["kotatogram-desktop", "discord", "keepassxc"])], layout="max"),
+          Group("term", label=""),
+          Group("gl", label="", matches=[Match(wm_class=["UltimMC", "Steam"])]),
           # This dsent really work because Minecraft window named something like "Minecraft* 1.18.1"
           # I think its possible to get all windows that contains Minecraft in the name to match group
           # However i dont know how
-          Group("game", matches=[Match(wm_class=["Minecraft"])]),
-          Group("main"),
-          Group("obs", matches=[Match(wm_class=["obs"])])]
+          Group("game", label="", matches=[Match(wm_class=["Minecraft"])]),
+          Group("main", label="", matches=[Match(wm_class=["thunar"])]),
+          Group("obs", label="", matches=[Match(wm_class=["obs"])])]
 
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
@@ -158,15 +157,17 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-
-colors = ["#2a3241e5",
+colors = ["#2a3241",
           "#7a7a7a",
           "#000000",
           "#ffbd00",
           "#524e39", 
           "#857856",
           "#1D5180",
-          "#ff4545",]
+          "#f75040",
+          "#5cf257",
+          "#542b28",
+          "#5accf2"]
 
 def get_widgets():
     return [
@@ -201,16 +202,98 @@ def get_widgets():
                                   margin=None, 
                                   width=bar.CALCULATED),
                 widget.Spacer(),
-                widget.Systray(background = colors[0]),
-                widget.Clock(format = "%Y-%m-%d %H:%M:%S",
+                
+                widget.Net(foreground=colors[10],
+                           format='↓ {down} ↑ {up}',
+                           use_bits=True),
+
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+
+                widget.TextBox(text="", foreground=colors[7], fontsize=17),
+                widget.CPUGraph(border_width=0,
+                                line_width=3,
+                                frequency=0.5,
+                                graph_color=colors[7],
+                                fill_color=colors[9]),
+                
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+                
+                widget.TextBox(text="", foreground=colors[3], fontsize=13),
+                widget.Memory(foreground=colors[3],
+                              fontsize=12,
+                              format="{MemUsed: .1f}{mm}  /  {MemTotal: .1f}{mm}",
+                              measure_mem="G",
+                              ),
+
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+
+                # widget.CheckUpdates(),
+                widget.DF(foreground=colors[8],
+                          fontsize=12,
+                          visible_on_warn=False,
+                          update_interval=2,
+                          format="  {f}{m} / {s}{m}  [{r:.0f}%]"
+                          ),
+
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+
+                widget.Clock(format = "%Y-%m-%d (%b, %a) %H:%M:%S",
                              foreground = colors[1],
-                             fontsize = 15,),
+                             fontsize = 15),
                 # widget.QuickExit(),
+            ]
+
+def get_2mon_widgets():
+    return [
+                widget.GroupBox(fontsize = 14,
+                                margin_y = 3,
+                                margin_x = 0,
+                                padding_y = 5,
+                                padding_x = 5,
+                                active = "#ffffff",
+                                inactive = colors[1],
+                                borderwidth=5,
+                                rounded = False, 
+                                highlight_color = colors[2], 
+                                highlight_method = "block",
+                                this_current_screen_border = colors[3],
+                                this_screen_border = colors[4],
+                                other_current_screen_border = colors[3],
+                                other_screen_border = colors[4],
+                                foreground = "#ffffff"),
+
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+                
+                widget.CurrentLayout(#foreground = colors[7],
+                                     foreground = colors[1],
+                                     padding = 7,
+                                     fontsize = 14,
+                                     ),
+                widget.Spacer(),
+                widget.WindowName(foreground = "#ffffff",
+                                  margin=None, 
+                                  width=bar.CALCULATED),
+                widget.Spacer(),
+                widget.Systray(),
+                
+                widget.Clock(format = "%Y-%m-%d (%b, %a) %H:%M:%S",
+                             foreground = colors[1],
+                             fontsize = 15),
             ]
 
 screens = [
     Screen(top=bar.Bar(
-               get_widgets(),
+               get_2mon_widgets(),
                28,
                background=colors[0],
                )
@@ -263,7 +346,7 @@ auto_minimize = False
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "qtile"
 
 @hook.subscribe.startup_once
 def autostart():
