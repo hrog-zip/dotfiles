@@ -14,9 +14,6 @@ super + d
 # super + ctrl + r
 #     pkill -USR1 -x sxhkd
 
-super + ctrl + shift + r
-    bspc wm -r
-
 super + alt + w
     firefox
 
@@ -39,7 +36,7 @@ super + control + shift + o
     shutdown now
 
 super + control + shift + p
-    reboot now
+    reboot
 
 super + alt + space
     alacritty -e btop
@@ -61,3 +58,12 @@ super + alt + o
 
 super + p
 	alacritty -e ~/bin/pkginstall
+
+super + F6
+	killall picom || picom -b --experimental-backends
+
+super + alt + n
+	nsxiv ~/pics/wallpapers
+
+super + alt + f 
+	alacritty -e lf
