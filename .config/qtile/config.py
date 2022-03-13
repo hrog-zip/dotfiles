@@ -35,6 +35,32 @@ from libqtile import hook
 import os
 import subprocess
 
+from configparser import ConfigParser, DuplicateSectionError
+
+### pywal stuff ###
+config = ConfigParser()
+config.read(os.path.expanduser('~/.config/qtile/config.ini'))
+
+wal = eval(config.get('main', 'wal'))
+
+def toggle_wal(*args, **kwargs):
+    global wal
+    wal = not wal
+
+    _config= ConfigParser()
+    _config.read(os.path.expanduser('~/.config/qtile/config.ini'))
+
+    # try:
+    #     _config.add_section('main')
+    # except DuplicateSectionError:
+    #     pass
+
+    _config.set('main', 'wal', str(wal))
+
+    with open(os.path.expanduser('~/.config/qtile/config.ini'), 'w') as f:
+        _config.write(f)
+###
+
 mod = "mod4"
 terminal = guess_terminal()
 browser = "firefox"
@@ -89,6 +115,7 @@ keys = [
     Key([mod], "e", lazy.to_screen(0)),
 
     Key([mod], "f", lazy.window.toggle_fullscreen()),
+    Key([mod], "F5", lazy.function(toggle_wal), lazy.reload_config()),
 ]
 # groups = [Group(i) for i in "1234567890"]
 groups = [Group("web", layout="max", label=""),
@@ -128,11 +155,37 @@ dgroups_key_binder = simple_key_binder("mod4")
 #         ]
 #     )
 
-layout_style = {"border_focus": "#ffbd00",
+if wal:
+    import json
+
+    with open(os.path.expanduser("~/.cache/wal/colors.json")) as f:
+        wal_json = json.load(f)
+    
+    colors = []
+    for c in wal_json["colors"]:
+        colors.append(wal_json["colors"][c])
+
+else:
+    colors = ["#2a3241",
+              "#7a7a7a",
+              "#000000",
+              "#ffbd00",
+              "#524e39", 
+              "#857856",
+              "#1D5180",
+              "#f75040",
+              "#5cf257",
+              "#542b28",
+              "#58c9f5",
+              "#c861ff",
+              "#ff9c40"]
+
+
+layout_style = {"border_focus": colors[3],
                 "border_width": 2,
                 "margin": 3,}
 
-floating_layout_style = {"border_focus": "#ff4545",
+floating_layout_style = {"border_focus": colors[7],
                          "border_width": 1,}
 
 layouts = [
@@ -156,18 +209,6 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-colors = ["#2a3241",
-          "#7a7a7a",
-          "#000000",
-          "#ffbd00",
-          "#524e39", 
-          "#857856",
-          "#1D5180",
-          "#f75040",
-          "#5cf257",
-          "#542b28",
-          "#58c9f5",
-          "#a678e3"]
 
 def get_widgets():
     return [
@@ -192,25 +233,36 @@ def get_widgets():
                            padding = 5,
                            ),
                 
-                widget.CurrentLayout(#foreground = colors[7],
-                                     foreground = colors[1],
-                                     padding = 7,
-                                     fontsize = 14,
-                                     ),
-                widget.Spacer(),
+                # widget.CurrentLayout(#foreground = colors[7],
+                #                      foreground = colors[1],
+                #                      padding = 7,
+                #                      fontsize = 14,
+                #                      ),
+                # widget.Spacer(),
                 widget.WindowName(foreground = "#ffffff",
                                   margin=None, 
                                   width=bar.CALCULATED),
+               
                 widget.Spacer(),
                 
-                widget.Net(foreground=colors[10],
-                           format="↓ {down} ↑ {up}",
-                           use_bits=False),
+                widget.CheckUpdates(colour_have_updates=colors[12],
+                                    colour_no_uodates=colors[12],
+                                    custom_command="checkupdates",
+                                    display_format="Updates {updates}",
+                                    no_update_string="No updates"),
 
                 widget.Sep(margin = 5,
                            padding = 5,
                            ),
-
+                
+                widget.Net(foreground=colors[10],
+                           format="↓ {down} ↑ {up}",
+                           use_bits=False),
+                
+                widget.Sep(margin = 5,
+                           padding = 5,
+                           ),
+               
                 widget.TextBox(text="", foreground=colors[7], fontsize=17),
                 widget.CPUGraph(border_width=0,
                                 line_width=3,
@@ -232,7 +284,6 @@ def get_widgets():
                            padding = 5,
                            ),
 
-                # widget.CheckUpdates(),
                 widget.DF(foreground=colors[8],
                           visible_on_warn=False,
                           update_interval=2,
@@ -243,9 +294,9 @@ def get_widgets():
                            padding = 5,
                            ),
 
-                widget.Clock(format = " %Y %b %a %H:%M:%S",
+                widget.Clock(format = "  %Y-%m-%d // %H:%M:%S",
                              foreground = colors[11],
-                             fontsize=14),
+                             fontsize=15),
                 # widget.QuickExit(),
             ]
 
@@ -254,12 +305,14 @@ screens = [
            get_widgets(),
            24,
            background=colors[0],
+#           margin=4,
            )),
 
     Screen(top=bar.Bar(
            get_widgets(),
            24,
            background=colors[0],
+#           margin=4,
            )),
 ]
 
