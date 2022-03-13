@@ -1,7 +1,48 @@
+FILE=$1
+EXTENSION=".${FILE##*.}"
+# BASE_FILE="${FILE%/*}/$(basename $FILE $EXTENSION)"
+PATH_TO_FILE="$(dirname $FILE)"
+BASE_FILE="$PATH_TO_FILE/$(basename $FILE $EXTENSION)"
+
+for arg in "$@"
+do
+	 case $arg in
+	 --no-wallpaper)
+     NO_WALLPAPER="true" 
+	 echo running in no-wallpaper mode
+	 ;; 
+	 
+	 --no-theme)
+     NO_THEME="true" 
+	 echo running in no-theme mode
+	 ;; 
+	 esac 
+done
+
 if [ ! -d "$HOME/.wallpaper" ]; then
 	mkdir "$HOME/.wallpaper"
 fi
 
-rm ~/.wallpaper/*
-cp $1 ~/.wallpaper
-xwallpaper --zoom $1
+if [ -z "$NO_WALLPAPER" ]; then
+	rm ~/.wallpaper/*
+	cp $FILE ~/.wallpaper/
+	
+	xwallpaper --zoom $FILE
+
+	if [ "${FILE##*.}" != "png" ]; then
+		echo Converting to .png
+		mogrify -format png $FILE
+
+		rm ~/.wallpaper/*
+		cp "$BASE_FILE.png" ~/.wallpaper/
+
+		xwallpaper --zoom "$BASE_FILE.png"
+		rm $BASE_FILE.png
+	fi
+fi
+
+if [ -z "$NO_THEME" ]; then
+	wal -i $FILE -n
+	qtile cmd-obj -o cmd -f restart
+	wal-telegram --wal --tiled 
+fi
