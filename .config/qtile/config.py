@@ -359,7 +359,7 @@ auto_minimize = False
 # java that happens to be on java's whitelist.
 wmname = "qtile"
 
-@hook.subscribe.startup_once
+@hook.subscribe.startup
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.run([home])
