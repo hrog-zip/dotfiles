@@ -1,4 +1,7 @@
+export PATH="$HOME/bin:$PATH"
 exec dunst &
+copyq &
+udiskie &
 
 setxkbmap -option grp:alt_shift_toggle -option grp_led:scroll us,ru 
 
