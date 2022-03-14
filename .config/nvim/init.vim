@@ -13,6 +13,7 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'navarasu/onedark.nvim'
 Plug 'preservim/nerdtree'
+Plug 'lambdalisue/suda.vim'
 call plug#end()
 
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
