@@ -5,12 +5,7 @@ setopt appendhistory
 
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-export EDITOR=nvim
-export TERM=alacritty
-# export BROWSER=firefox
-
-source /home/arzt/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 update_prompt() {
     local CMD_EXIT_CODE=$?
@@ -27,9 +22,6 @@ update_prompt() {
 
 precmd() { update_prompt }
 
-export PF_INFO="ascii title os host kernel uptime pkgs shell wm de memory palette" 
-export NSXIV_OPTS=${NSXIV_OPTS:-"-a"}
-
 alias restartx='sudo systemctl restart display-manager'
 alias s="/bin/ls"
 alias ls='ls -Al --color=auto'
@@ -44,9 +36,7 @@ alias cfgzsh="nvim ~/.zshrc"
 alias cfgx="nvim ~/.xprofile"
 alias cfgn="nvim ~/.config/nvim/init.vim"
 alias cfgsxhkd="nvim .config/sxhkd/sxhkdrc"
-alias cfgrr="nvim ~/.config/ranger/rifle.conf"
-
-export PATH="$HOME/bin:$PATH"
+alias cfglf="nvim ~/.config/lf/lfrc"
 
 cat ~/.cache/wal/sequences
 
