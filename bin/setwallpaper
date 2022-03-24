@@ -43,8 +43,16 @@ fi
 
 if [ -z "$NO_THEME" ]; then
 	wal -i $FILE -n
-	qtile cmd-obj -o cmd -f restart
-	wal-telegram --wal --tiled 
-	cp ~/.cache/wal/colors-rofi-light.rasi ~/.config/rofi/config.rasi
-	cp ~/.cache/wal/colors.Xresources ~/.Xresources 
+
+    wal-telegram --wal --tiled
+    echo [A] Set telegram theme
+    
+    cp $(realpath ~/.cache/wal/colors.Xresources) $(realpath ~/.Xresources)
+    echo [A] Set .Xresources theme
+    
+    cp $(realpath ~/.cache/wal/colors-rofi-light.rasi) $(realpath ~/.config/rofi/config.rasi)
+    echo [A] Set rofi theme
+    
+    qtile cmd-obj -o cmd -f restart
+    echo [A] Restarted qtile
 fi

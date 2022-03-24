@@ -65,5 +65,8 @@ super + F6
 super + alt + n
 	nsxiv ~/pics/wallpapers
 
-super + alt + f 
-	alacritty -e lf
+super + alt + f
+	alacritty -e $HOME/.config/lf/lfrun
+
+super + alt + g
+	rofi -modi emoji -show emoji

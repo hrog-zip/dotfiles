@@ -32,16 +32,28 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook
 
+import traverse
+
 import os
 import subprocess
 
 from configparser import ConfigParser, DuplicateSectionError
 
-### pywal stuff ###
-config = ConfigParser()
-config.read(os.path.expanduser('~/.config/qtile/config.ini'))
+@lazy.function
+def float_to_front(qtile) -> None:
+    """Bring all floating windows of the group to front"""
+    for window in qtile.current_group.windows:
+        if window.floating:
+            window.cmd_bring_to_front()
 
-wal = eval(config.get('main', 'wal'))
+### pywal stuff ###
+try:
+    config = ConfigParser()
+    config.read(os.path.expanduser('~/.config/qtile/config.ini'))
+    
+    wal = eval(config.get('main', 'wal'))
+except Exception:
+    wal = False
 
 def toggle_wal(*args, **kwargs):
     global wal
@@ -50,10 +62,10 @@ def toggle_wal(*args, **kwargs):
     _config= ConfigParser()
     _config.read(os.path.expanduser('~/.config/qtile/config.ini'))
 
-    # try:
-    #     _config.add_section('main')
-    # except DuplicateSectionError:
-    #     pass
+    try:
+        _config.add_section('main')
+    except DuplicateSectionError:
+        pass
 
     _config.set('main', 'wal', str(wal))
 
@@ -85,6 +97,10 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+    # Key([mod], 'k', lazy.function(traverse.up)),
+    # Key([mod], 'j', lazy.function(traverse.down)),
+    # Key([mod], 'h', lazy.function(traverse.left)),
+    # Key([mod], 'l', lazy.function(traverse.right)),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -96,33 +112,36 @@ keys = [
     Key([mod, "mod1"], "k", lazy.layout.flip_up()),
     Key([mod, "mod1"], "h", lazy.layout.flip_left()),
     Key([mod, "mod1"], "l", lazy.layout.flip_right()),
+
     Key([mod, "control"], "j", lazy.layout.grow_down()),
     Key([mod, "control"], "k", lazy.layout.grow_up()),
     Key([mod, "control"], "h", lazy.layout.grow_left()),
     Key([mod, "control"], "l", lazy.layout.grow_right()),
     Key([mod, "shift"], "n", lazy.layout.normalize()),
 
-    Key([mod, "control"], "k", lazy.layout.grow()),
-    Key([mod, "control"], "j", lazy.layout.shrink()),
     Key([mod], "space", lazy.window.toggle_floating()),
+    Key([mod, "shift"], "space", lazy.group.next_window(), desc="Move window focus to other window"),
     
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "control", "shift"], "F12", lazy.shutdown(), desc="Shutdown Qtile"),
+
     Key([mod], "w", lazy.to_screen(1)),
     Key([mod], "e", lazy.to_screen(0)),
 
     Key([mod], "f", lazy.window.toggle_fullscreen()),
     Key([mod], "F5", lazy.function(toggle_wal), lazy.reload_config()),
+    Key([mod], "b", lazy.function(float_to_front)),
+
 ]
 # groups = [Group(i) for i in "1234567890"]
 groups = [Group("web", layout="max", label=""),
           Group("2mon", label="", matches=[Match(wm_class=["kotatogram-desktop", "discord", "keepassxc"])], layout="max"),
           Group("term", label=""),
           Group("gl", label="", matches=[Match(wm_class=["UltimMC", "Steam"])]),
-          # This dsent really work because Minecraft window named something like "Minecraft* 1.18.1"
+          # This dosent really work because Minecraft window named something like "Minecraft* 1.18.1"
           # I think its possible to get all windows that contains Minecraft in the name to match group
           # However i dont know how
           Group("game", label="", matches=[Match(wm_class=["Minecraft"])]),
@@ -168,16 +187,16 @@ if wal:
 else:
     colors = ["#2a3241",
               "#7a7a7a",
-              "#000000",
+              "#3c403e",
               "#ffbd00",
+              "#f75040",
+              "#542b28",
+              "#5cf257",
+              "#58c9f5",
+              "#c861ff",
               "#524e39", 
               "#857856",
               "#1D5180",
-              "#f75040",
-              "#5cf257",
-              "#542b28",
-              "#58c9f5",
-              "#c861ff",
               "#ff9c40"]
 
 
@@ -191,10 +210,10 @@ floating_layout_style = {"border_focus": colors[7],
 layouts = [
     #layout.Columns(**layout_style),
     # layout.MonadTall(**layout_style),
-    #layout.Floating(),
     # layout.Stack(num_stacks=2),
     layout.Bsp(**layout_style),
     layout.Max(),
+    # layout.Floating(**layout_style),
     # layout.Matrix(),
     # layout.MonadWide(),
     # layout.RatioTile(),
@@ -208,9 +227,11 @@ widget_defaults = dict(
     fontsize=12,
     padding=3,
 )
+
 extension_defaults = widget_defaults.copy()
 
 def get_widgets():
+
     return [
                 widget.GroupBox(fontsize = 14,
                                 margin_y = 3,
@@ -224,9 +245,9 @@ def get_widgets():
                                 highlight_color = colors[2], 
                                 highlight_method = "block",
                                 this_current_screen_border = colors[3],
-                                this_screen_border = colors[4],
+                                this_screen_border = colors[10],
                                 other_current_screen_border = colors[3],
-                                other_screen_border = colors[4],
+                                other_screen_border = colors[10],
                                 foreground = "#ffffff"),
 
                 widget.Sep(margin = 5,
@@ -245,57 +266,64 @@ def get_widgets():
                
                 widget.Spacer(),
                 
-                widget.CheckUpdates(colour_have_updates=colors[12],
-                                    colour_no_uodates=colors[12],
+                widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[2], padding=0),
+                
+                widget.CheckUpdates(colour_have_updates="#ffffff",
+                                    colour_no_uodates="#ffffff",
+                                    background=colors[2],
                                     custom_command="checkupdates",
                                     display_format="Updates {updates}",
                                     no_update_string="No updates"),
 
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
-                
-                widget.Net(foreground=colors[10],
-                           format="↓ {down} ↑ {up}",
-                           use_bits=False),
-                
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
+                # widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[8], background=colors[2], padding=0),
+                # 
+                # widget.Net(foreground="#ffffff",
+                #            background=colors[8],
+                #            format="↓ {down} ↑ {up}",
+                #            use_bits=False),
+                # 
+                # widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[2], background=colors[8], padding=0),
                
-                widget.TextBox(text="", foreground=colors[7], fontsize=17),
-                widget.CPUGraph(border_width=0,
-                                line_width=3,
-                                frequency=0.5,
-                                graph_color=colors[7],
-                                fill_color=colors[9]),
+                # widget.TextBox(text="",
+                #                foreground="#ffffff", 
+                #                background=colors[2],
+                #                fontsize=17
+                #                ),
+
+                # widget.CPUGraph(border_width=0,
+                #                 background=colors[2],
+                #                 line_width=3,
+                #                 frequency=0.5,
+                #                 graph_color=colors[5],
+                #                 fill_color=colors[5]),
                 
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
+                widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[8], background=colors[2], padding=0),
                 
-                widget.TextBox(text="", foreground=colors[3], fontsize=13),
-                widget.Memory(foreground=colors[3],
+                widget.TextBox(text="",
+							   foreground="#ffffff",
+                               background=colors[8],
+							   fontsize=13),
+
+                widget.Memory(foreground="#ffffff",
+                              background=colors[8],
                               format="{MemUsed: .1f}{mm}  /  {MemTotal: .1f}{mm}",
                               measure_mem="G",
                               ),
 
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
+                widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[2], background=colors[8], padding=0),
 
-                widget.DF(foreground=colors[8],
+                widget.DF(foreground="#ffffff",
+                          background=colors[2],
                           visible_on_warn=False,
                           update_interval=2,
                           format="  {f}{m} / {s}{m}  [{r:.0f}%]"
                           ),
 
-                widget.Sep(margin = 5,
-                           padding = 5,
-                           ),
+                widget.TextBox(text="", font="JetBrains Mono", fontsize=45, foreground=colors[8], background=colors[2], padding=0),
 
                 widget.Clock(format = "  %Y-%m-%d // %H:%M:%S",
-                             foreground = colors[11],
+                             foreground = "#ffffff",
+                             background=colors[8],
                              fontsize=15),
                 # widget.QuickExit(),
             ]
@@ -347,7 +375,7 @@ reconfigure_screens = True
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
-auto_minimize = False
+auto_minimize = True
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
@@ -363,5 +391,4 @@ wmname = "qtile"
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.run([home])
-
 

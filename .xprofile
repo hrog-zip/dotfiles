@@ -1,8 +1,11 @@
+#!/bin/sh
+
 export PATH="$HOME/bin:$PATH"
 export PF_INFO="ascii title os host kernel uptime pkgs shell wm de memory palette" 
 export NSXIV_OPTS=${NSXIV_OPTS:-"-a -0"}
 export EDITOR=nvim
 export TERM=alacritty
+export GPG_TTY=$(tty)
 # export BROWSER=firefoxexec dunst &
 
 copyq &
