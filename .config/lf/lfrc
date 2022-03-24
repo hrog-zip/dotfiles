@@ -1,0 +1,62 @@
+set ratios 1:2:3
+set cleaner ~/.config/lf/cleaner
+set previewer ~/.config/lf/preview
+set ignorecase true
+map <enter> shell
+
+map m
+map "'"
+map '"'
+map d
+
+cmd gallery %{{
+	iv -t . || echo "No images in this directory"
+}}
+
+cmd open ${{
+	case $(file --mime-type  "$f"  -b) in
+	# application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
+	# image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+    #     text/*|application/json|inode/x-empty) $EDITOR $fx;;
+	# image/x-xcf) setsid -f gimp "$f" >/dev/null 2>&1 ;;
+	# image/svg+xml) display -- "$f" ;;
+	# image/*) rotdir "$f" | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
+	# 	setsid -f sxiv -aio 2>/dev/null | while read -r file; do
+	# 		[ -z "$file" ] && continue
+	# 		lf -remote "send select \"$file\""
+	# 		lf -remote "send toggle"
+	# 	done &
+	# 	;;
+	audio/*) mpv --audio-display=no "$f" ;;
+	video/*) setsid -f mpv "$f" -quiet >/dev/null 2>&1 ;;
+	# application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	# application/pgp-encrypted) $EDITOR $fx ;;
+    #     *) for f in $fx; do setsid -f $OPENER "$f" >/dev/null 2>&1; done;;
+
+	application/pdf|application/vnd*|application/epub*) setsid -f zathura  "$f"  ;;
+	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura  "$f"  ;;
+
+    esac
+}}
+
+cmd unarchive ${{
+  mkdir "${f%.*}"
+  case "$f" in
+      *.zip) unzip "$f" -d "${f%.*}";;
+      *.tar.gz) tar -xzvf "$f" -C "${f%.*}";;
+      *.tar.bz2) tar -xjvf "$f" -C "${f%.*}";;
+      *.tar) tar -xvf "$f" -C "${f%.*}";;
+	  *.rar) 7z x "$f" -o"${f%.*}" ;;
+      *) echo "Unsupported format" ;;
+  esac
+}}
+
+map x cut
+map D delete
+map u unselect
+map R reload
+map P gallery 
+map l open
+map au unarchive
+map <c-space> glob-select *
+map as calcdirsize

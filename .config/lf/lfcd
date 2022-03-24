@@ -1,0 +1,12 @@
+#!/bin/sh
+
+lfcd() {
+	tmp="$(mktemp)"
+	# https://github.com/gokcehan/lf/issues/635
+    $HOME/.config/lf/lfrun -last-dir-path="$tmp" "$@"
+    [ -f "$tmp" ] && {
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$PWD" ] && cd "$dir"
+    }
+}
