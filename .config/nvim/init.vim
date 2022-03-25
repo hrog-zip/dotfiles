@@ -14,7 +14,7 @@ Plug 'preservim/nerdtree'
 Plug 'lambdalisue/suda.vim'
 Plug 'gleich/monovibrant'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Everblush/everblush.vim'
+Plug 'sainnhe/gruvbox-material'
 " Plug 'zchee/deoplete-jedi'
 " Plug 'python-mode/python-mode'
 call plug#end()
@@ -22,7 +22,10 @@ call plug#end()
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 
 set tgc
-colorscheme onedark
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_disable_italic_comment = '1'
+let g:gruvbox_material_transparent_background = '0'
+colorscheme gruvbox-material
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 let mapleader = " "
