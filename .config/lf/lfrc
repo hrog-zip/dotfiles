@@ -8,6 +8,7 @@ map m
 map "'"
 map '"'
 map d
+map c
 
 cmd gallery %{{
 	iv -t . || echo "No images in this directory"
@@ -60,3 +61,8 @@ map l open
 map au unarchive
 map <c-space> glob-select *
 map as calcdirsize
+map gc cd ~/.config
+map cd cd ~/.config/dwm-6.3
+map cD cd ~/Downloads
+map cw cd ~/pics/wallpapers
+map cs cd ~/.steam/steam
