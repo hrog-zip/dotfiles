@@ -10,20 +10,6 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Check for virtualenvwrapper
-if type workon >/dev/null 2>&1; then
-  VENV_WRAPPER=true
-else
-  VENV_WRAPPER=false
-fi
-
-export PROMPT_COMMAND=_virtualenv_auto_activate
-if [ -n "$ZSH_VERSION" ]; then
-  function chpwd() {
-    _virtualenv_auto_activate
-  }
-fi
-
 source ~/.config/lf/lfcd
 
 bindkey -s '^o' '^llfcd\r'
@@ -65,7 +51,8 @@ alias cfgt="nvim ~/.config/tmux/tmux.conf"
 
 # figlet ARZT ARSCH | lolcat -S 60
 function stierlitz { shuf -n 1 .stierlitz | lolcat -F 0.05; }
-pfetch
+# pfetch
+paleofetch | lolcat
 
 # stierlitz
 # neofetch
