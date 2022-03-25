@@ -5,7 +5,7 @@ font:
   normal:
     family: JetBrains Mono
     style: Medium
-  size: 14
+  size: 12
 
 key_bindings:
 - { key: PageUp,   mods: Shift,   action: ScrollPageUp                 }

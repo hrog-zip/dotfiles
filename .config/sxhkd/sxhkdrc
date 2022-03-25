@@ -70,3 +70,6 @@ super + alt + f
 
 super + alt + g
 	rofi -modi emoji -show emoji
+
+super + control + shift + F12
+	killall dwm_autorestart

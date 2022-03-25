@@ -24,3 +24,4 @@ xrandr --output HDMI-A-0 --mode 1680x1050 --output HDMI-A-1 --mode 1920x1080 --p
 # setxkbmap -option caps:swapescape
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+exec dwm_autorestart
