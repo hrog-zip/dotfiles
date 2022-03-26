@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-    alacritty
+    $TERM
 
 # program launcher
 super + d
@@ -21,7 +21,7 @@ super + alt + s
 	steam
 
 super + alt + z
-    pavucontrol
+    $TERM -e pulsemixer
 
 super + alt + t
     io.github.kotatogram
@@ -29,7 +29,7 @@ super + alt + t
 super + alt + c
     galculator
 
-super + alt + k
+super + alt + y
     keepassxc
 
 super + control + shift + o
@@ -39,7 +39,7 @@ super + control + shift + p
     reboot
 
 super + alt + space
-    alacritty -e btop
+    $TERM -e btop
 
 super + alt + m
     bash /home/arzt/bin/multimc
@@ -57,7 +57,7 @@ super + alt + o
 	com.obsproject.Studio
 
 super + p
-	alacritty -e ~/bin/pkginstall
+	$TERM -e ~/bin/pkginstall
 
 super + F6
 	killall picom || picom -b --experimental-backends
@@ -66,10 +66,7 @@ super + alt + n
 	nsxiv ~/pics/wallpapers
 
 super + alt + f
-	alacritty -e $HOME/.config/lf/lfrun
+	$TERM -e $HOME/.config/lf/lfrun
 
 super + alt + g
 	rofi -modi emoji -show emoji
-
-super + control + shift + F12
-	killall dwm_autorestart

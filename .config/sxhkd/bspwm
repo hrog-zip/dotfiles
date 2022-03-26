@@ -1,0 +1,39 @@
+# restart bspwm
+super + shift + r
+	bspc wm -r
+
+# quit bspwm
+super + shift + control + F12
+	bspc quit
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+    bspc {desktop --focus,node --to-desktop} 'focused:^{1-9,10}'
+
+# move and switch windows between monitors
+super + {_,shift +} {w,e}
+    bspc {monitor --focus,node --to-monitor} {HDMI-A-0, HDMI-A-1}
+
+# close and kill
+super + shift + {_, control +}c
+	bspc node -{c,k}
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# expand a window by moving one of its side outward
+super + control + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + control + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move floating window
+super + alt + {h,j,k,l}
+	bspc node -v {-70 0,0 70,0 -70,70 0}
+
+# set the window state
+super + {t,space,f}
+	bspc node -t {tiled,floating,fullscreen}
