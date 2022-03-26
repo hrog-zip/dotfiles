@@ -62,7 +62,8 @@ map au unarchive
 map <c-space> glob-select *
 map as calcdirsize
 map gc cd ~/.config
-map cd cd ~/.config/dwm-6.3
 map cD cd ~/Downloads
 map cw cd ~/pics/wallpapers
 map cs cd ~/.steam/steam
+map cc cd ~/.config
+map cb cd ~/.config/bspwm
