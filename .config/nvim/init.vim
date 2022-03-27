@@ -39,6 +39,10 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <A-=> 3<C-w><
 nnoremap <A--> 3<C-w>>
+nnoremap <A-.> 3<C-w>+
+nnoremap <A-,> 3<C-w>-
+
+tnoremap <Esc> <C-\><C-n>
 
 nnoremap d "_d
 

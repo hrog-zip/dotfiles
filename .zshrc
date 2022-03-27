@@ -52,7 +52,9 @@ alias cfgt="nvim ~/.config/tmux/tmux.conf"
 # figlet ARZT ARSCH | lolcat -S 60
 function stierlitz { shuf -n 1 .stierlitz | lolcat -F 0.05; }
 # pfetch
-paleofetch | lolcat
+# paleofetch | lolcat
+# https://github.com/IchMageBaume/clolcat
+paleofetch | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | clolcat
 
 # stierlitz
 # neofetch

@@ -37,6 +37,8 @@ cmd open ${{
 	application/pdf|application/vnd*|application/epub*) setsid -f zathura  "$f"  ;;
 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura  "$f"  ;;
 
+	image/*) iv $f
+
     esac
 }}
 
@@ -47,7 +49,7 @@ cmd unarchive ${{
       *.tar.gz) tar -xzvf "$f" -C "${f%.*}";;
       *.tar.bz2) tar -xjvf "$f" -C "${f%.*}";;
       *.tar) tar -xvf "$f" -C "${f%.*}";;
-	  *.rar) 7z x "$f" -o"${f%.*}" ;;
+	  *.rar | *.7z) 7z x "$f" -o"${f%.*}" ;;
       *) echo "Unsupported format" ;;
   esac
 }}
