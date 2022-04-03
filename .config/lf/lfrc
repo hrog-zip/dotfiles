@@ -10,34 +10,38 @@ map '"'
 map d
 map c
 
-cmd gallery %{{
-	iv -t . || echo "No images in this directory"
+# https://github.com/salman-abedin/devour
+# this program is used a lot here since it is
+# a dead simple implementation of swallowing
+
+cmd gallery ${{
+	devour iv -t .
 }}
 
 cmd open ${{
 	case $(file --mime-type  "$f"  -b) in
 	# application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
-	# image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	# image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) zathura $fx >/dev/null 2>&1 ;;
     #     text/*|application/json|inode/x-empty) $EDITOR $fx;;
-	# image/x-xcf) setsid -f gimp "$f" >/dev/null 2>&1 ;;
+	# image/x-xcf) gimp "$f" >/dev/null 2>&1 ;;
 	# image/svg+xml) display -- "$f" ;;
 	# image/*) rotdir "$f" | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
-	# 	setsid -f sxiv -aio 2>/dev/null | while read -r file; do
+	# 	sxiv -aio 2>/dev/null | while read -r file; do
 	# 		[ -z "$file" ] && continue
 	# 		lf -remote "send select \"$file\""
 	# 		lf -remote "send toggle"
 	# 	done &
 	# 	;;
 	audio/*) mpv --audio-display=no "$f" ;;
-	video/*) setsid -f mpv "$f" -quiet >/dev/null 2>&1 ;;
-	# application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	video/*) devour mpv "$f" -quiet >/dev/null 2>&1 ;;
+	# application/pdf|application/vnd*|application/epub*) zathura $fx >/dev/null 2>&1 ;;
 	# application/pgp-encrypted) $EDITOR $fx ;;
-    #     *) for f in $fx; do setsid -f $OPENER "$f" >/dev/null 2>&1; done;;
+    #     *) for f in $fx; do $OPENER "$f" >/dev/null 2>&1; done;;
 
-	application/pdf|application/vnd*|application/epub*) setsid -f zathura  "$f"  ;;
-	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura  "$f"  ;;
+	application/pdf|application/vnd*|application/epub*) devour zathura  "$f"  ;;
+	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) devour zathura  "$f"  ;;
 
-	image/*) iv $f
+	image/*) devour iv "$f"
 
     esac
 }}
@@ -48,6 +52,7 @@ cmd unarchive ${{
       *.zip) unzip "$f" -d "${f%.*}";;
       *.tar.gz) tar -xzvf "$f" -C "${f%.*}";;
       *.tar.bz2) tar -xjvf "$f" -C "${f%.*}";;
+      *.tar.xz) tar -xvf "$f" -C "${f%.*}";;
       *.tar) tar -xvf "$f" -C "${f%.*}";;
 	  *.rar | *.7z) 7z x "$f" -o"${f%.*}" ;;
       *) echo "Unsupported format" ;;
@@ -63,9 +68,10 @@ map l open
 map au unarchive
 map <c-space> glob-select *
 map as calcdirsize
-map gc cd ~/.config
 map cD cd ~/Downloads
 map cw cd ~/pics/wallpapers
 map cs cd ~/.steam/steam
 map cc cd ~/.config
 map cb cd ~/.config/bspwm
+map cf cd ~/.config/lf
+map ch cd ~

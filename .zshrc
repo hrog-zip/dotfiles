@@ -16,7 +16,8 @@ bindkey -s '^o' '^llfcd\r'
 
 update_prompt() {
     local CMD_EXIT_CODE=$?
-    PROMPT=$'%F{#313b40}[%F{yellow}%n%F{#313b40}@%F{#c94f55}%m%f%F{#313b40}]%f %F{red}%B%~%b%f \n$ '
+    # PROMPT=$'%F{#313b40}[%F{yellow}%n%F{#313b40}@%F{#c94f55}%m%f%F{#313b40}]%f %F{red}%B%~%b%f $ '
+    PROMPT='%F{#313b40}[%f%F{red}%B%~%b%f%F{#313b40}]%f %F{yellow}$%f '
     
     if [ $CMD_EXIT_CODE != "0" ]; then
         RPROMPT="%F{#313b40}[%F{#c94f55}$CMD_EXIT_CODE%f%F{#313b40}]"
@@ -36,7 +37,6 @@ alias aura='sudo aura'
 alias pacman='sudo pacman'
 alias dotfilescfg="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias rr="ranger"
-alias ss="sudo !!"
 alias n="nvim"
 alias cfgq="nvim ~/.config/qtile/config.py"
 alias cfgzsh="nvim ~/.zshrc"
@@ -54,7 +54,7 @@ function stierlitz { shuf -n 1 .stierlitz | lolcat -F 0.05; }
 # pfetch
 # paleofetch | lolcat
 # https://github.com/IchMageBaume/clolcat
-paleofetch | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | clolcat
+paleofetch --recache | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | clolcat -F 0.05
 
 # stierlitz
 # neofetch
