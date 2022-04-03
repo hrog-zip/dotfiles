@@ -18,7 +18,7 @@ update_prompt() {
     local CMD_EXIT_CODE=$?
     # PROMPT=$'%F{#313b40}[%F{yellow}%n%F{#313b40}@%F{#c94f55}%m%f%F{#313b40}]%f %F{red}%B%~%b%f $ '
     PROMPT='%F{#313b40}[%f%F{red}%B%~%b%f%F{#313b40}]%f %F{yellow}$%f '
-	[[ -n ${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-} ]] && PROMPT='%F{#313b40}[%f%F{green}(ssh)%f %F{yellow}%n%F{#313b40}@%F{#c94f55}%m%f %F{red}%B%~%b%f%F{#313b40}]%f %F{yellow}$%f '
+	[[ -n ${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-} ]] && PROMPT='%F{green}(ssh)%f %F{#313b40}[%f%F{yellow}%n%F{#313b40}@%F{#c94f55}%m%f %F{red}%B%~%b%f%F{#313b40}]%f %F{yellow}$%f '
     
     if [ $CMD_EXIT_CODE != "0" ]; then
         RPROMPT="%F{#313b40}[%F{#c94f55}$CMD_EXIT_CODE%f%F{#313b40}]"
