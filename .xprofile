@@ -11,6 +11,8 @@ export GPG_TTY=$(tty)
 copyq &
 dunst &
 udiskie &
+# watch -n 5 ssh -YC arzt@192.168.1.74 x2x -east -to :0.0 &
+# while true; do command ssh -YC arzt@192.168.1.74 x2x -east -to :0.0 ; [ $? -eq 0 ] && break || sleep 5; done &
 
 setxkbmap -option grp:alt_shift_toggle -option grp_led:scroll us,ru 
 
@@ -24,4 +26,4 @@ xrandr --output HDMI-A-0 --mode 1680x1050 --output HDMI-A-1 --mode 1920x1080 --p
 # setxkbmap -option caps:swapescape
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-xset r rate 200 45
+xset r rate 200 75

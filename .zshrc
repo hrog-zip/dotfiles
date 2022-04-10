@@ -10,9 +10,13 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+fpath=($HOME/.zsh/zsh-completions $fpath)
+
 source ~/.config/lf/lfcd
 
-bindkey -s '^o' '^llfcd\r'
+function lfcd_bind() { lfcd; zle reset-prompt; zle redisplay}
+zle -N lfcd_bind
+bindkey '^o' lfcd_bind
 
 update_prompt() {
     local CMD_EXIT_CODE=$?
@@ -26,7 +30,7 @@ update_prompt() {
         RPROMPT=""
     fi
 
-    echo
+    # echo
 }
 
 precmd() { update_prompt }

@@ -19,6 +19,9 @@ bspc config gapless_monocle      true
 bspc config ignore_ewmh_struts	 false
 bspc config top_padding			 30
 
+bspc rule -a Origin.exe floating=on
+bspc rule -a origin.exe floating=on
+
 bspc rule -a Screenkey manage=off
 bspc rule -a Polybar layer=above
 

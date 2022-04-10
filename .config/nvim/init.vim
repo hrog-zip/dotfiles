@@ -15,6 +15,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'gleich/monovibrant'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sainnhe/gruvbox-material'
+Plug 'smithbm2316/centerpad.nvim'
 " Plug 'zchee/deoplete-jedi'
 " Plug 'python-mode/python-mode'
 call plug#end()
@@ -45,6 +46,8 @@ nnoremap <A-,> 3<C-w>-
 tnoremap <Esc> <C-\><C-n>
 
 nnoremap d "_d
+
+nnoremap <C-c> :Centerpad<CR>
 
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif

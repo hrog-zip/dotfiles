@@ -6,6 +6,9 @@
 super + Return
     $TERM
 
+super + shift + Return
+	$TERM -e ssh arzt@192.168.1.74
+
 # program launcher
 super + d
     rofi -modi drun -show drun
@@ -70,3 +73,12 @@ super + alt + f
 
 super + alt + g
 	rofi -modi emoji -show emoji
+
+super + F1
+	ssh -t arzt@192.168.1.74 "DISPLAY=:0.0 xrandr --output eDP1 --off"
+
+super + F2
+	ssh -t arzt@192.168.1.74 "DISPLAY=:0.0 xrandr --output eDP1 --auto"
+
+super + c
+	cfgchooser

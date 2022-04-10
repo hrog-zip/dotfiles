@@ -18,6 +18,15 @@ cmd gallery ${{
 	devour iv -t .
 }}
 
+# cmd dragon ${{
+# 	dragon $fx
+# }}
+
+# https://github.com/BrodieRobertson/dotfiles/blob/master/config/lf/lfrc
+cmd dragon %dragon -a -x $fx
+cmd dragon-stay %dragon -a $fx
+cmd dragon-individual %dragon $fx
+
 cmd open ${{
 	case $(file --mime-type  "$f"  -b) in
 	# application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
@@ -59,6 +68,33 @@ cmd unarchive ${{
   esac
 }}
 
+cmd fzf_jump ${{
+    # res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	res="$(ag --hidden --ignore .git -l -g '' | fzf)"
+    if [ -d "$res" ] ; then
+        cmd="cd"
+    elif [ -f "$res" ] ; then
+        cmd="select"
+    else
+        exit 0
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+# cmd fzf_dir_jump ${{
+#     # res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+# 	res="$(ag --hidden --ignore .git -l -g '' | fzf)"
+#     if [ -d "$res" ] ; then
+#         cmd="cd"
+#     elif [ -f "$res" ] ; then
+#         cmd="select"
+#     else
+#         exit 0
+#     fi
+#     lf -remote "send $id $cmd \"$res\""
+# }}
+
+# basic stuff
 map x cut
 map D delete
 map u unselect
@@ -66,8 +102,15 @@ map R reload
 map P gallery 
 map l open
 map au unarchive
+# i know that there is v key that can do the same
+# but it is actually inverting the selection
 map <c-space> glob-select *
 map as calcdirsize
+# binds for dragon
+map dd dragon
+map di dragon-individual
+map ds dragon-stay
+# cd into frequently used directories
 map cD cd ~/Downloads
 map cw cd ~/pics/wallpapers
 map cs cd ~/.steam/steam
@@ -75,3 +118,6 @@ map cc cd ~/.config
 map cb cd ~/.config/bspwm
 map cf cd ~/.config/lf
 map ch cd ~
+# map <c-f> :fzf_jump
+map o fzf_jump
+map o fzf_jump

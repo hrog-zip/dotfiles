@@ -54,3 +54,9 @@ super + ctrl + shift + equal
 # cycle through windows
 super + {_, shift +} Tab
 	bspc node -f {next, prev}.local.!hidden.window
+
+super + s
+	bspc desktop -l tiled
+
+super + m 
+	bspc desktop -l monocle

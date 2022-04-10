@@ -1,0 +1,4 @@
+file="$(find $HOME/.config -type 'f' | rofi -dmenu)"
+if [ -n "$file" ]; then
+	echo "$file" | xargs -I {} $TERM -e $EDITOR {}
+fi
