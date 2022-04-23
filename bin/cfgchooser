@@ -1,4 +1,4 @@
-file="$(find $HOME/.config -type 'f' | rofi -dmenu)"
+file="$(find $HOME/.config -type 'f' | fzf --preview='bat --color=always --style=plain --pager=never {}')"
 if [ -n "$file" ]; then
-	echo "$file" | xargs -I {} $TERM -e $EDITOR {}
+	$EDITOR "$file"
 fi

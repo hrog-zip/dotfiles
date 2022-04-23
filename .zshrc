@@ -51,6 +51,7 @@ alias cfgsxhkd="nvim .config/sxhkd/sxhkdrc"
 alias cfglf="nvim ~/.config/lf/lfrc"
 alias cfgp="nvim ~/.config/picom/picom.conf"
 alias cfgt="nvim ~/.config/tmux/tmux.conf"
+alias t="tmux"
 
 # cat ~/.cache/wal/sequences
 

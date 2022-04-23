@@ -1,11 +1,12 @@
 #!/bin/sh
 
 export PATH="$HOME/bin:$PATH"
-export PF_INFO="ascii title os host kernel uptime pkgs shell wm de memory palette" 
+export PF_INFO="ascii title os host kernel uptime pkgs shell wm de memory palette"
 export NSXIV_OPTS=${NSXIV_OPTS:-"-a -0"}
 export EDITOR=nvim
-export TERM=alacritty
+export TERM=st
 export GPG_TTY=$(tty)
+export FZF_DEFAULT_OPTS="--preview='bat --color=always --style=plain --pager=never {}'"
 # export BROWSER=firefoxexec dunst &
 
 copyq &
@@ -14,11 +15,12 @@ udiskie &
 # watch -n 5 ssh -YC arzt@192.168.1.74 x2x -east -to :0.0 &
 # while true; do command ssh -YC arzt@192.168.1.74 x2x -east -to :0.0 ; [ $? -eq 0 ] && break || sleep 5; done &
 
-setxkbmap -option grp:alt_shift_toggle -option grp_led:scroll us,ru 
+setxkbmap -option grp:alt_shift_toggle -option grp_led:scroll us,ru
+setxkbmap -option caps:escape
 
 xwallpaper --zoom .wallpaper/*
 xset s off
-xset m 0 0 
+xset m 0 0
 xset -dpms
 
 xrandr --output HDMI-A-0 --mode 1680x1050 --output HDMI-A-1 --mode 1920x1080 --primary
@@ -26,4 +28,4 @@ xrandr --output HDMI-A-0 --mode 1680x1050 --output HDMI-A-1 --mode 1920x1080 --p
 # setxkbmap -option caps:swapescape
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-xset r rate 200 75
+xset r rate 250 70

@@ -6,8 +6,11 @@
 super + Return
     $TERM
 
+# super + shift + Return
+# 	$TERM -e ssh arzt@192.168.1.74
+
 super + shift + Return
-	$TERM -e ssh arzt@192.168.1.74
+	tdrop -am -w 60% -x 20% -s dropdown $TERM
 
 # program launcher
 super + d
@@ -68,9 +71,6 @@ super + F6
 super + alt + n
 	nsxiv ~/pics/wallpapers
 
-super + alt + f
-	$TERM -e $HOME/.config/lf/lfrun
-
 super + alt + g
 	rofi -modi emoji -show emoji
 
@@ -80,5 +80,8 @@ super + F1
 super + F2
 	ssh -t arzt@192.168.1.74 "DISPLAY=:0.0 xrandr --output eDP1 --auto"
 
-super + c
-	cfgchooser
+super + Escape
+	killall xmouseless || xmouseless
+
+super + b
+	(killall polybar && bspc config top_padding 0) || ($HOME/.config/polybar/launch.sh && bspc config top_padding 30)
